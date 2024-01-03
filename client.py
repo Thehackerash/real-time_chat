@@ -1,14 +1,20 @@
 import socket
 
-PORT = 5050
+PORT = 18257
 FORMAT = 'utf-8'
 DISCONNECT_MSG = "!disconnected"
-SERVER = '192.168.29.49'
-ADDR = (SERVER, PORT)
+SERVER_URL = 'tcp://0.tcp.in.ngrok.io:18257'
+
+# Extract host and port from the URL
+server_url_parts = SERVER_URL.split(':')
+SERVER_HOST = server_url_parts[1][2:]  # Remove '//' from the beginning
+SERVER_PORT = int(server_url_parts[2])
+
+ADDR = (SERVER_HOST, SERVER_PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
-name = socket.gethostbyaddr(SERVER)
+name = socket.gethostname()
 
 def recv_msg(conn):
     msg_len = conn.recv(64).decode(FORMAT)
@@ -30,6 +36,6 @@ if __name__ == "__main__":
     name = socket.gethostname()
     send_msg(name)
     while True:
-        msg = input(f"{name}:")
+        msg = input(f"{name}: ")
         send_msg(msg)
         print(recv_msg(client))

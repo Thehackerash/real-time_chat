@@ -1,12 +1,12 @@
 import socket
 import threading
 
-SERVER = socket.gethostbyname(socket.gethostname()) 
+SERVER = "0.0.0.0"
 PORT = 5050
 ADDR = (SERVER, PORT)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
-DISCONNECT_MSG = "!disconnected"
+DISCONNECT_MSG = "!disconnect"
 FORMAT = 'utf-8'
 STR = " hello world"
 
